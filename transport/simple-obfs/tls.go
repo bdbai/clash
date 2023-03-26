@@ -28,6 +28,7 @@ func (to *TLSObfs) read(b []byte, discardN int) (int, error) {
 	buf := pool.Get(discardN)
 	_, err := io.ReadFull(to.Conn, buf)
 	if err != nil {
+		pool.Put(buf)
 		return 0, err
 	}
 	pool.Put(buf)
